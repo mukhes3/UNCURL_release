@@ -123,12 +123,20 @@ ScatterPlotGivenLabels(RedDim,Lab,k);
 ```
 **Note:-** Matlab has an in-built function 'gplotmatrix', which is more dynamic and should be used unless your version does not have that function (https://www.mathworks.com/help/stats/gplotmatrix.html). 
 
-
 2-dimensional representation (RedDim), cell type labels (Lab, this can be any numerical labels between 1 and k), k (no. of unique labels) and an Adjacency matrix (Adj). You can plot a graph with nodes colored by the labels as follows: 
 
 ```
 PlotGraphGivenAdj(Adj,Dat,Lab,k)
 ```
+
+## Datasets 
+UNCURL comes with a few toy datasets, namely :
+
+Zeisel_data - Contains a sub-sampled version of the dataset from Zeisel et. al. with the differentially expressed genes (it also contains bulk data for the cell types) 
+Islam_data - Contains the dataset from Islam et. al. (with bulk data from the cell types) 
+Synthetic_Linear - Contains synthetic data from a linear trajectory (with true M, w matrices and cell type labels) 
+Synthetic_Branches - Contains synthetic data from a branched trajectory (with true M, w matrices and branch labels) 
+
 ## Frequently Asked Questions
 FAQs for UNCURL can be found here: https://sites.google.com/uw.edu/uncurl-release/faq . 
 
