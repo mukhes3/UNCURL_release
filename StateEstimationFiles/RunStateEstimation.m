@@ -54,7 +54,7 @@ switch Distribution
 
         %running state estimation 
         display('Performing state estimation');
-        [M,Xconv,CostPerIter]   = PoissConvMixModel(Dat,MeansInit,k,eps,IterMax); 
+        [M,Xconv,CostPerIter]   = PoissConvMixModel(Dat + 1e-10,MeansInit,k,eps,IterMax); 
 
     case 'ZIP'
 
@@ -79,7 +79,7 @@ switch Distribution
 
         %running state estimation 
         display('Performing state estimation');
-        [M,Xconv,CostPerIter]   = Zero_PoissConvMixModel(Dat,MeansInit,k,eps,IterMax);         
+        [M,Xconv,CostPerIter]   = Zero_PoissConvMixModel(Dat + 1e-10,MeansInit,k,eps,IterMax);         
         
     otherwise
 
@@ -104,7 +104,7 @@ switch Distribution
 
         %running state estimation 
         display('Performing state estimation');
-        [M,Xconv,CostPerIter,~]   = NBConvMixModel(Dat,MeansInit,k,eps,IterMax); 
+        [M,Xconv,CostPerIter,~]   = NBConvMixModel(Dat + 1e-10,MeansInit,k,eps,IterMax); 
 
         
 end

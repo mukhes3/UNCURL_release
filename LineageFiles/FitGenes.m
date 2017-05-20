@@ -1,3 +1,20 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  This function generates smoothed gene expression vs pseudotim 
+%
+%Inputs: 
+% Dat - Data matrix 
+% Pseudotime - vector of pseudotime value for each cell 
+%
+%Outputs: 
+% FitMat - Smoothed matrix 
+% ScMat - Scaled matrix
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
 function [FitMat,ScMat] = FitGenes(Dat,Pseudotime)
 
 Dat2 = zeros(size(Dat));

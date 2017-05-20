@@ -5,7 +5,6 @@
 %     node 
 %
 %Inputs: 
-
 % M - matrix of means 
 % Xconv - Matrix of convex weights
 % k - no. of clusters 
