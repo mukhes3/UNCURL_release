@@ -45,12 +45,17 @@ end
 
 %if information isn't available about all cell types 
 if k0<k 
-    Means = KmeansPP(Means(In,:),Dat(In,:) + 1e-10, k); 
+    Means2 = KmeansPP(Means(In,:),Dat(In,:) + 1e-10, k);
+    Means = zeros(n,k); 
+    Means(In,:) = Means2; 
 end
 
 %if information isn't available about all genes 
 if length(In) < n 
-    [Pred,LogLike] = PoissHardEM(Means,Dat(In,:) + 1e-10,1,k); 
+    [Pred,LogLike] = RunClustering(Means(In,:), Dat(In,:) + 1e-10, k, 'Poiss', 1); 
+% 
+%     PoissHardEM(Means(In,:),Dat(In,:) + 1e-10,1,k);
+%     Pred
     Means = CalcMeans(Pred,Dat + 1e-10,k); 
 end
 
