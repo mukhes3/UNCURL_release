@@ -2,10 +2,10 @@
 %  Call this function to run any of the many clustering options of UNCURL  
 %              
 % Inputs: 
-% InitMeans - Matrix of initial means (can be empty)  
 % Dat - Data matrix 
 % k - no. of clusters 
 % Distribution - 'NB' (default), 'NB_slow', 'Poiss' or 'ZIP'
+% InitMeans - Matrix of initial means (can be empty)  
 % IterMax (optional) - Maximum no. of iterations to run EM algorithm for 
 % (default 5)
 % 
@@ -17,7 +17,7 @@
 % this option for large files. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [Pred,LogLike] = RunClustering(InitMeans, Dat, k, Distribution, varargin)
+function [Pred,LogLike] = RunClustering(Dat, k, Distribution, InitMeans, varargin)
 
 eps = 1e-9 ; %small number that needs to be added to data matrix to avoid 
 %numberical issues. 
