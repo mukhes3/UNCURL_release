@@ -48,15 +48,21 @@ In = GetHighVarGenes(Dat,NoBins,x);
 ```
 
 ### Semi-supervision
-Suppose you have a matrix of qualitative data (M) whose dimensions are 'genes X cell types' and a SCS data matrix (Dat) whose dimensions are 'genes X cells', the following syntax will convert your qualitative data to quantitative data that is compatible with your SCS dataset. 
+UNCURL has a framework (qualNorm) which converts cell type specific qualitative information into good initialization points for the various downstream algorithms. The qualitative information is expected to be binarized. For bulk datasets, this can be done by performing one-vs-all differential expression analaysis on the different cell types (followed by thresholding). This step is left to the user. The function is specified as follows:
+
+Inputs: 
+X - Dataset of dimension 'genes X cells'  
+B - Binarized qualitative information matrix (of dimension 'genes X subset of cell types'). If there are genes for which qualitative information is not known, set the entire row to -1. Otherwise all entries should be 1 or 0.    
+k - No. of cell types expected in the dataset 
+
+Outputs:  
+M - Matrix of quantiative means of dimension 'genes X cell types'
 
 ```
-[QualMeans,I_nan,M] = Qual2Quant(Dat,M); 
+M = QualNorm(Dat, B, k) 
 ```
-The function will return the following:       
-QualMeans - The qualitative to quantitative converted means  
-I_nan - Indices where this didn't work   
-M - A column normalized version of the input M   
+
+Note: The user does not need to provide information about all cell types. Once the means for the known cell types are estimated, our algorithm approximates the location of the missing cell types using the Poisson Kmeans++ algorithm. 
 
 ### Clustering 
 Suppose you have a similar data matrix (Dat), some initial centers (InitMeans) you have in mind (enter [] if you don't know any), the number of clusters you expect to see (k), the clustering distribution (Negative Binomial is 'NB', Negative Binomial without the use of mex files is 'NB_slow', Poisson is 'Poiss' and Zero-Inflated Poisson is 'ZIP') and the maximum no. of iterations (IterMax) till which you want clustering to run (this is an optional argument, default value is 5). You can get the predicted clusters by entering the following code:   
