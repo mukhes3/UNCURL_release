@@ -50,7 +50,7 @@ In = GetHighVarGenes(Dat,NoBins,x);
 ### Semi-supervision
 UNCURL has a framework (qualNorm) which converts cell type specific qualitative information into good initialization points for the various downstream algorithms. The qualitative information is expected to be binarized. For bulk datasets, this can be done by performing one-vs-all differential expression analaysis on the different cell types (followed by thresholding). This step is left to the user. The function is specified as follows:
 
-Inputs: 
+Inputs:        
 X - Dataset of dimension 'genes X cells'  
 B - Binarized qualitative information matrix (of dimension 'genes X subset of cell types'). If there are genes for which qualitative information is not known, set the entire row to -1. Otherwise all entries should be 1 or 0.    
 k - No. of cell types expected in the dataset 
