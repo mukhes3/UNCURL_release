@@ -3,8 +3,8 @@
 %
 % Inputs: 
 % Dat - data matrix 
-% MeansInit - Initial means (can be empty) 
 % k - no. of clusters 
+% MeansInit - Initial means (can be empty) 
 % Distribution - 'NB' , 'Poiss' or 'ZIP' (default is NB) 
 % eps - functional error tolerance (default 1e-4) OPTIONAL
 % IterMax - maximum no. of iterations (default 10) OPTIONAL
@@ -15,7 +15,7 @@
 % CostPerIter - Cost function value at each iteration
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [M,Xconv,CostPerIter] = RunStateEstimation(Dat,MeansInit,k,Distribution,varargin)
+function [M,Xconv,CostPerIter] = RunStateEstimation(Dat,k,MeansInit,Distribution,varargin)
 
 if length(varargin) == 0 
     eps = 1e-4; 
