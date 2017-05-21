@@ -64,7 +64,7 @@ Synthax:
 M = QualNorm(X, B, k) 
 ```
 
-Note: The user does not need to provide information about all cell types. Once the means for the known cell types are estimated, our algorithm approximates the location of the missing cell types using the Poisson Kmeans++ algorithm. 
+**Note:** The user does not need to provide information about all cell types. Once the means for the known cell types are estimated, our algorithm approximates the location of the missing cell types using the Poisson Kmeans++ algorithm. 
 
 ### State estimation
 UNCURL estimates the approximate transcriptomic state from the observed single cell sequenced data, using an algorithm called 'Sampled Matrix Factorization'. The state estimation is specified as follows:   
@@ -88,10 +88,10 @@ Syntax:
 [M,W,CostPerIter] = RunStateEstimation(X,k,Dist,M0,eps,IterMax); 
 ```
 
-Note: In case qualitative information is available, the output of the qualNorm function can be used as the M0 here. 
+**Note:** In case qualitative information is available, the output of the qualNorm function can be used as the M0 here. 
 
 ### Dimensionality reduction
-Suppose you now have the M and the W matrices from the previous step. You can convert the data to l dimensions using UNCURL. The function to do so is specified as follows:     
+Suppose you now have the M and the W matrices from the state estimation step. You can convert the data to l dimensions using UNCURL. The function to do so is specified as follows:     
 
 Inputs:     
 M - Estimated 'archetypal' transcriptomic states (dimension is 'genes X cell types')      
@@ -108,47 +108,74 @@ X_ld = PoissRedDim(M,W,k);
 ```
 
 ### Clustering 
-Suppose you have a similar data matrix (Dat), some initial centers (InitMeans) you have in mind (enter [] if you don't know any), the number of clusters you expect to see (k), the clustering distribution (Negative Binomial is 'NB', Negative Binomial without the use of mex files is 'NB_slow', Poisson is 'Poiss' and Zero-Inflated Poisson is 'ZIP') and the maximum no. of iterations (IterMax) till which you want clustering to run (this is an optional argument, default value is 5). You can get the predicted clusters by entering the following code:   
+UNCURL also employs several distribution based clustering algorithms to cluster the data into different cell types. The function for clustering is specified as follows:      
+
+Inputs:     
+X - Dataset of dimension 'genes X cells'  
+k - No. of cell types expected in the dataset   
+Dist - Sampling distribution of the dataset. The current options are 'Poiss' (Poisson),'NB' (Negative Binomial with compiled mex file), 'NB_slow' (negative binomial without mex file) and 'ZIP' (Zero Inflated Poisson). The default is 'NB_slow'.         
+M0 - Initial guess for means (dimension 'genes X cell types'), if available. Enter [] if you don't know any.        
+IterMax (optional) - Maximum iterations. default : 5.       
+
+Outputs:
+Pred - Predicted class label for each cell. Dimension '1 X cells'         
+LogLike - The Log Likelihood matrix. Dimension is 'cell types X cells'        
+
+Syntax:       
 
 ```
-[Pred,LogLike] = RunClustering(InitMeans, Dat, k, Distribution, IterMax); 
+[Pred,LogLike] = RunClustering(X, k, Distribution, M0 IterMax); 
 ```
-The outputs will be the following:  
-Pred - Predicted class label for each cell  
-LogLike - The Log Likelihood matrix whose dimension is 'cell types X cells'
 
-Note:- If you are using the means estimated during the state estimation step (see below) as your initial guess for means, we **strongly recommend** doing the following before providing the means:
+**Note:** In case qualitative information is available, the output of the qualNorm function can be used as the M0 here.       
+
+**Note:** If you are using the means estimated during the state estimation step as your initial guess for means, we **strongly recommend** doing the following before providing the means:            
 
 ```
-[InitMeans] = KmeansPP(InitMeans,Dat,k);
+[M0] = KmeansPP(M0,X,k);
 ```
-This step will simply replace the estimated means with the closest points in the dataset. We have seen that this significantly improves the clustering accuracy. If you want to run the clustering quickly, you can simply do it without providing any initial means. In such a case, UNCURL will use Kmeans++ to general starting points for the clustering algorithm. 
+This step will simply replace the estimated means with the closest points in the dataset. We have seen that this significantly improves the clustering accuracy. If you want to run the clustering quickly, you can simply do it without providing any initial means. In such a case, UNCURL will use Kmeans++ to general starting points for the clustering algorithm.         
 
 ### Lineage estimation 
-Suppose you now have the M and the W matrices from the state estimation step. You can infer a smooth lineage for your data using the following syntax: 
+Suppose you now have the M and the W matrices from the state estimation step, UNCURL can be used to infer a smooth lineage for your data. The function to do so is specified as follows:        
 
-```
-[RedDim, LinDat, AdjW, Adj, EndNodes] = RunUNCURL_lineage(M,Xconv); 
-```
-Where the outputs are as follows:       
+Inputs: 
+M - Estimated 'archetypal' transcriptomic states (dimension is 'genes X cell types')      
+W - The convex mixting values for each cell (dimension is 'cell types X cells')       
+
+Outputs:
 RedDim - The reduced dimension matrix of dimensions '2 X cells'          
 LinDat - Smoothed trajectory having dimension '2 X cells'   
 AdjW - Weighted adjacency matrix of dimension 'cells X cells'   
 Adj - Unweighted adjacency matrix of dimension 'cells X cells'  
 EndNodes - EndNodes of the graph    
 
-This part also generates a plot showing the end nodes on a scatter plot. This lets the user choose which is the starting node. 
+Syntax:   
+
+```
+[RedDim, LinDat, AdjW, Adj, EndNodes] = RunUNCURL_lineage(M,W); 
+```
+
+**Note:** This part also generates a plot showing the end nodes on a scatter plot. This lets the user choose which is the starting node. 
 
 ### Pseudotime calculation and smoothing genes 
-Suppose you now have the weighted adjacency matrix (AdjW) and know the starting node (StartIn), you can use this to calculate the pseudotime of each cell and estimate a smoothed (and normalized) value for each gene's expression as follows: 
+Suppose you now have the weighted adjacency matrix and the starting node (from the lineage estimation step), you can use this to calculate the pseudotime of each cell and estimate a smoothed (and normalized) value for each gene's expression. The function to do so is specified as follows:         
 
-```
-[Pseudotime, FitMat, ScMat] = SmoothDataUsingLineage(AdjW, StartIn, Dat); 
-```
-Where the outputs are as follows:       
+Inputs:       
+AdjW - Weighted adjacency matrix of dimension 'cells X cells'         
+StartIn - Starting cell           
+X - Dataset of dimension 'genes X cells'  
+
+Outputs:
 Pseudotime - Pseudotime values for all cells       
 FitMat - Smoothed & scaled values for all genes       
 ScMat - Scaled values for all genes (not smoothed)      
+
+Syntax:       
+
+```
+[Pseudotime, FitMat, ScMat] = SmoothDataUsingLineage(AdjW, StartIn, X); 
+```
 
 **Note:** The data matrix provided here can either be the observed data matrix or the estimated data matrix (= M X W). Our observation has been that using the estimated data matrix leads to smoother gene expression values even before fitting the genes. However, we leave it up to the user to decide what they want to do here.  
 
@@ -156,17 +183,17 @@ ScMat - Scaled values for all genes (not smoothed)
 ### Plotting
 UNCURL presently has two plotting functions, namely 'ScatterPlotGivenLabels()' and 'PlotGraphGivenAdj()'. Their syntaxes are explained below: 
 
-Suppose you have a 2-dimensional representation (RedDim), cell type labels (Lab, this can be any numerical labels between 1 and k) and k (no. of unique labels). You can plot the data on reduced dimensions with each label getting a separate color using the function 'ScatterPlotGivenLabels()' as follows: 
+Suppose you have a 2-dimensional representation (X_ld), cell type labels (Lab, this can be any numerical labels between 1 and k) and k (no. of cell types). You can plot the data on reduced dimensions with each label getting a separate color using the function 'ScatterPlotGivenLabels()' as follows: 
 
 ```
-ScatterPlotGivenLabels(RedDim,Lab,k); 
+ScatterPlotGivenLabels(X_ld,Lab,k); 
 ```
 **Note:-** Matlab has an in-built function 'gplotmatrix', which is more dynamic and should be used unless your version does not have that function (https://www.mathworks.com/help/stats/gplotmatrix.html). 
 
-2-dimensional representation (RedDim), cell type labels (Lab, this can be any numerical labels between 1 and k), k (no. of unique labels) and an Adjacency matrix (Adj). You can plot a graph with nodes colored by the labels as follows: 
+2-dimensional representation (X_ld), cell type labels (Lab, this can be any numerical labels between 1 and k), k (no. of unique labels) and an Adjacency matrix (Adj). You can plot a graph with nodes colored by the labels as follows: 
 
 ```
-PlotGraphGivenAdj(Adj,Dat,Lab,k)
+PlotGraphGivenAdj(Adj,X,Lab,k)
 ```
 
 ## Datasets 
@@ -176,6 +203,8 @@ Zeisel_data - Contains a sub-sampled version of the dataset from Zeisel et. al. 
 Islam_data - Contains the dataset from Islam et. al. (with bulk data from the cell types) 
 Synthetic_Linear - Contains synthetic data from a linear trajectory (with true M, w matrices and cell type labels) 
 Synthetic_Branches - Contains synthetic data from a branched trajectory (with true M, w matrices and branch labels) 
+
+**Note:-** These datasets have been pre-processed to include only the differentially expressed genes (using bulk data for differential gene expression analysis). 
 
 ## Frequently Asked Questions
 FAQs for UNCURL can be found here: https://sites.google.com/uw.edu/uncurl-release/faq . 
