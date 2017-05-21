@@ -61,7 +61,7 @@ M - Matrix of quantiative means of dimension 'genes X cell types'
 Synthax:  
 
 ```
-M = QualNorm(Dat, B, k) 
+M = QualNorm(X, B, k) 
 ```
 
 Note: The user does not need to provide information about all cell types. Once the means for the known cell types are estimated, our algorithm approximates the location of the missing cell types using the Poisson Kmeans++ algorithm. 
@@ -72,8 +72,8 @@ UNCURL estimates the approximate transcriptomic state from the observed single c
 Inputs:   
 X - Dataset of dimension 'genes X cells'  
 k - No. of cell types expected in the dataset   
-M0 - Initial guess for means (dimension 'genes X cell types'), if available. Enter [] if you don't know any.    
 Dist - Sampling distribution of the dataset. The current options are 'Poiss' (Poisson),'NB' (Negative Binomial) and 'ZIP' (Zero Inflated Poisson) but 'ZIP' is still in beta mode. The default is 'NB'.       
+M0 - Initial guess for means (dimension 'genes X cell types'), if available. Enter [] if you don't know any.        
 eps (optional) - function tolerance . default : 1e-4.       
 IterMax (optional) - Maximum iterations. default : 10. 
 
@@ -85,16 +85,27 @@ CostPerIter - Cost function value after each iteration (1 X no. of iterations)
 Syntax:     
 
 ```
-[M,W,CostPerIter] = RunStateEstimation(Dat,MeansInit, Dist, k,eps,IterMax); 
+[M,W,CostPerIter] = RunStateEstimation(X,k,Dist,M0,eps,IterMax); 
 ```
+
+Note: In case qualitative information is available, the output of the qualNorm function can be used as the M0 here. 
 
 ### Dimensionality reduction
-Suppose you now have the M and the W matrices from the previous step. You can convert the data to k dimensions (optional variable, default 2) using the following syntax: 
+Suppose you now have the M and the W matrices from the previous step. You can convert the data to l dimensions using UNCURL. The function to do so is specified as follows:     
+
+Inputs:     
+M - Estimated 'archetypal' transcriptomic states (dimension is 'genes X cell types')      
+W - The convex mixting values for each cell (dimension is 'cell types X cells')       
+l (optional) - Desired no. of dimensions. Default: 2.                  
+
+Outputs:      
+X_ld - Reduced dimension matrix of dimensions 'l X cells'       
+
+Syntax:       
 
 ```
-RedDim = PoissRedDim(M,W,k); 
+X_ld = PoissRedDim(M,W,k); 
 ```
-Where RedDim is the reduced dimension matrix of dimensions 'k X cells'. 
 
 ### Clustering 
 Suppose you have a similar data matrix (Dat), some initial centers (InitMeans) you have in mind (enter [] if you don't know any), the number of clusters you expect to see (k), the clustering distribution (Negative Binomial is 'NB', Negative Binomial without the use of mex files is 'NB_slow', Poisson is 'Poiss' and Zero-Inflated Poisson is 'ZIP') and the maximum no. of iterations (IterMax) till which you want clustering to run (this is an optional argument, default value is 5). You can get the predicted clusters by entering the following code:   
