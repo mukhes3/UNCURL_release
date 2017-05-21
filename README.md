@@ -206,6 +206,8 @@ Synthetic_Branches - Contains synthetic data from a branched trajectory (with tr
 
 **Note:-** These datasets have been pre-processed to include only the differentially expressed genes (using bulk data for differential gene expression analysis). 
 
+![GitHub Logo](/Misc/UNCURL_deps.jpg)
+
 ## Frequently Asked Questions
 FAQs for UNCURL can be found here: https://sites.google.com/uw.edu/uncurl-release/faq . 
 
