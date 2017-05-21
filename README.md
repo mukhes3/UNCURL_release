@@ -77,7 +77,7 @@ Dist - Sampling distribution of the dataset. The current options are 'Poiss' (Po
 eps (optional) - function tolerance . default : 1e-4.       
 IterMax (optional) - Maximum iterations. default : 10. 
 
-Where the outputs are the following:  
+Outputs:  
 M - Estimated 'archetypal' transcriptomic states (dimension is 'genes X cell types')        
 W - The convex mixting values for each cell (dimension is 'cell types X cells')         
 CostPerIter - Cost function value after each iteration (1 X no. of iterations)           
