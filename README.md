@@ -16,7 +16,7 @@ Georg Seelig (Associate Professor, UW Electrical Engineering / UW Computer Scien
 
 ## References: 
 Please cite the following paper in case you use UNCURL for your work:  
-S. Mukherjee, Y. Zhang, S. Kannan, G. Seelig, Prior knowledge and sampling model informed learning with single cell RNA-Seq data
+S. Mukherjee, Y. Zhang, S. Kannan, G. Seelig, 'Prior knowledge and sampling model informed learning with single cell RNA-Seq data'.
 
 ## Dependencies: 
 To the best of our knowledge, UNCURL only needs a working version of MATLAB with the optimization toolbox installed. If you discover any other dependencies, please report them to mukhes3@uw.edu or yjzhang@cs.washington.edu. 
@@ -56,13 +56,45 @@ B - Binarized qualitative information matrix (of dimension 'genes X subset of ce
 k - No. of cell types expected in the dataset 
 
 Outputs:  
-M - Matrix of quantiative means of dimension 'genes X cell types'
+M - Matrix of quantiative means of dimension 'genes X cell types' 
+
+Synthax:  
 
 ```
 M = QualNorm(Dat, B, k) 
 ```
 
 Note: The user does not need to provide information about all cell types. Once the means for the known cell types are estimated, our algorithm approximates the location of the missing cell types using the Poisson Kmeans++ algorithm. 
+
+### State estimation
+UNCURL estimates the approximate transcriptomic state from the observed single cell sequenced data, using an algorithm called 'Sampled Matrix Factorization'. The state estimation is specified as follows:   
+
+Inputs:   
+X - Dataset of dimension 'genes X cells'  
+k - No. of cell types expected in the dataset   
+M0 - Initial guess for means (dimension 'genes X cell types'), if available. Enter [] if you don't know any.    
+Dist - Sampling distribution of the dataset. The current options are 'Poiss' (Poisson),'NB' (Negative Binomial) and 'ZIP' (Zero Inflated Poisson) but 'ZIP' is still in beta mode. The default is 'NB'.       
+eps (optional) - function tolerance . default : 1e-4.       
+IterMax (optional) - Maximum iterations. default : 10. 
+
+Where the outputs are the following:  
+M - Estimated 'archetypal' transcriptomic states (dimension is 'genes X cell types')        
+W - The convex mixting values for each cell (dimension is 'cell types X cells')         
+CostPerIter - Cost function value after each iteration (1 X no. of iterations)           
+
+Syntax:     
+
+```
+[M,W,CostPerIter] = RunStateEstimation(Dat,MeansInit, Dist, k,eps,IterMax); 
+```
+
+### Dimensionality reduction
+Suppose you now have the M and the W matrices from the previous step. You can convert the data to k dimensions (optional variable, default 2) using the following syntax: 
+
+```
+RedDim = PoissRedDim(M,W,k); 
+```
+Where RedDim is the reduced dimension matrix of dimensions 'k X cells'. 
 
 ### Clustering 
 Suppose you have a similar data matrix (Dat), some initial centers (InitMeans) you have in mind (enter [] if you don't know any), the number of clusters you expect to see (k), the clustering distribution (Negative Binomial is 'NB', Negative Binomial without the use of mex files is 'NB_slow', Poisson is 'Poiss' and Zero-Inflated Poisson is 'ZIP') and the maximum no. of iterations (IterMax) till which you want clustering to run (this is an optional argument, default value is 5). You can get the predicted clusters by entering the following code:   
@@ -80,25 +112,6 @@ Note:- If you are using the means estimated during the state estimation step (se
 [InitMeans] = KmeansPP(InitMeans,Dat,k);
 ```
 This step will simply replace the estimated means with the closest points in the dataset. We have seen that this significantly improves the clustering accuracy. If you want to run the clustering quickly, you can simply do it without providing any initial means. In such a case, UNCURL will use Kmeans++ to general starting points for the clustering algorithm. 
-
-### State estimation
-Suppose you have a similar data matrix (Dat), some initial centers (InitMeans) you have in mind (enter [] if you don't know any), the number of clusters you expect to see (k), Distribution (Dist, 'Poiss','NB' and 'ZIP' are the three options but 'ZIP' is still in beta mode), function tolerance (eps, optional argument with a default value of 1e-4) and the maximum no. of iterations (IterMax) till which you want clustering to run (this is an optional argument, default value is 10). You can get the predicted estimate of the true state by entering the following code:
-
-```
-[M,W,CostPerIter] = RunStateEstimation(Dat,MeansInit, Dist, k,eps,IterMax); 
-```
-Where the outputs are the following:  
-M - Estimated 'extreme' transcriptomic states (dimension is 'genes X cell types') 
-W - The convex mixting values for each cell (dimension is 'cell types X cells')     
-CostPerIter - Cost function value after each iteration  
-
-### Dimensionality reduction
-Suppose you now have the M and the W matrices from the previous step. You can convert the data to k dimensions (optional variable, default 2) using the following syntax: 
-
-```
-RedDim = PoissRedDim(M,W,k); 
-```
-Where RedDim is the reduced dimension matrix of dimensions 'k X cells'. 
 
 ### Lineage estimation 
 Suppose you now have the M and the W matrices from the state estimation step. You can infer a smooth lineage for your data using the following syntax: 
