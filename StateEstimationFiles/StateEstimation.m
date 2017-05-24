@@ -34,7 +34,8 @@ for i = 1:Reps
     [M2,Xconv2,CostPerIter2] = RunStateEstimation(Dat,k,Distribution,MeansInit,eps,IterMax); 
     
     if CostPerIter2(end)<=CostMin
-        CostMin = CostPerIter2; 
+        CostMin = CostPerIter2(end);
+        CostPerIter = CostPerIter2; 
         M = M2; 
         Xconv = Xconv2; 
     end
