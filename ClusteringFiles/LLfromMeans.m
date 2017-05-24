@@ -23,7 +23,7 @@ M = repmat(m,1,c);
 % temp(I) = temp(I) - (x(I).*log(x(I)) - x(I) + .5*log(2*pi*x(I))); 
 % temp(I3) = -inf; 
 
-temp = poisspdf(x,M); 
+temp = log(poisspdf(x,M)); 
 
 if r>1
     LogLike = sum(temp);
