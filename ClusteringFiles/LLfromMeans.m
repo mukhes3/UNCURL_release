@@ -10,20 +10,18 @@ M = repmat(m,1,c);
 
 % temp = exp(-M).*(M.^x)./factorial(x); 
 % LogLike = sum(log(temp)); 
-% I = find(x.*M); 
-% I2 = find(M); 
-% I3 = find((x>0).*(M==0)); 
-% 
-% temp = zeros(r,c); 
-% 
-% temp(I2) = -M(I2) + x(I2).*log(M(I2));
-% 
-% % temp = -M + x.*log(M);
-% 
-% temp(I) = temp(I) - (x(I).*log(x(I)) - x(I) + .5*log(2*pi*x(I))); 
-% temp(I3) = -inf; 
+I = find(x.*M); 
+I2 = find(M); 
+I3 = find((x>0).*(M==0)); 
 
-temp = log(poisspdf(x,M)); 
+temp = zeros(r,c); 
+
+temp(I2) = -M(I2) + x(I2).*log(M(I2));
+
+% temp = -M + x.*log(M);
+
+temp(I) = temp(I) - (x(I).*log(x(I)) - x(I) + .5*log(2*pi*x(I))); 
+temp(I3) = -inf; 
 
 if r>1
     LogLike = sum(temp);
@@ -32,4 +30,3 @@ else
     LogLike = temp; 
 end
 
-end

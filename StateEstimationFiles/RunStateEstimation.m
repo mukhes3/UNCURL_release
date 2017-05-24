@@ -38,7 +38,7 @@ switch Distribution
     
             display('Performing initial clustering'); 
     
-            MeansInit = KmeansPP([],Dat + 1e-9,k);
+            MeansInit = KmeansPP([],Dat + 1e-10,k);
             LogLike = zeros(k,c); 
 
             for i = 1:k 
@@ -48,7 +48,7 @@ switch Distribution
             Init = AssignLabelsFromLL(LogLike); 
     
             [Pred,LogLike] = PoissHardEM(Init,Dat,5,k);
-            MeansInit = CalcMeans(Pred,Dat + 1e-9 ,k); 
+            MeansInit = CalcMeans(Pred,Dat + 1e-10 ,k); 
         end
     
 
@@ -63,7 +63,7 @@ switch Distribution
     
             display('Performing initial clustering'); 
     
-            MeansInit = KmeansPP([],Dat + 1e-9,k);
+            MeansInit = KmeansPP([],Dat + 1e-10,k);
             LogLike = zeros(k,c); 
 
             for i = 1:k 
@@ -73,7 +73,7 @@ switch Distribution
             Init = AssignLabelsFromLL(LogLike); 
     
             [Pred,LogLike] = ZIPHardEM(Init,Dat,5,k);
-            MeansInit = CalcMeans(Pred,Dat + 1e-9 ,k); 
+            MeansInit = CalcMeans(Pred,Dat + 1e-10 ,k); 
         end
     
 
@@ -88,7 +88,7 @@ switch Distribution
     
             display('Performing initial clustering'); 
     
-            MeansInit = KmeansPP([],Dat + 1e-9,k);
+            MeansInit = KmeansPP([],Dat + 1e-10,k);
             LogLike = zeros(k,c); 
 
             for i = 1:k 
@@ -98,7 +98,7 @@ switch Distribution
             Init = AssignLabelsFromLL(LogLike); 
     
             [Pred,LogLike] = NBHardEM(Init,Dat,5,k);
-            MeansInit = CalcMeans(Pred,Dat + 1e-9 ,k); 
+            MeansInit = CalcMeans(Pred,Dat + 1e-10 ,k); 
         end
     
 

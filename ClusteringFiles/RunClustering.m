@@ -19,7 +19,7 @@
 
 function [Pred,LogLike] = RunClustering(Dat, k, Distribution, InitMeans, varargin)
 
-eps = 1e-9 ; %small number that needs to be added to data matrix to avoid 
+eps = 1e-10 ; %small number that needs to be added to data matrix to avoid 
 %numberical issues. 
 
 if length(varargin) > 0 

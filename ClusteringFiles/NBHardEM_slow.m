@@ -32,7 +32,7 @@ for j = 1:k
     LogLikeNB(j,:) = LLfromParams(Dat(NB_genes,:),R(:,j),P(:,j)); 
     
     if ~isempty(P_genes)
-        LogLikeP(j,:) = LLfromMeans(Dat(P_genes,:),M(:,j));
+        LogLikeP(j,:) = LLfromMeans2(Dat(P_genes,:),M(:,j));
     else
         LogLikeP(j,:) = zeros(1,c); 
     end

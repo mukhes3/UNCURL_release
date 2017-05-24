@@ -6,8 +6,7 @@
 % k - no. of clusters 
 % Distribution - 'NB' , 'Poiss' or 'ZIP' (default is NB) 
 % MeansInit - Initial means (can be empty) 
-% Reps - No. of repeats to run state estimation for. Do not enter 0 unless
-% for semi-supervised case. 
+% Reps - No. of repeats to run state estimation for
 % eps - functional error tolerance (default 1e-4) OPTIONAL
 % IterMax - maximum no. of iterations (default 10) OPTIONAL
 %
@@ -31,7 +30,6 @@ end
 
 CostMin = Inf; 
 
-%Running state estimation for unsupervised case
 for i = 1:Reps 
     
     display(strcat('Repeat no.',int2str(i))); 
@@ -46,9 +44,8 @@ for i = 1:Reps
     end
 end
     
-%Running state estimation for semi-supervised case
 if ~isempty(MeansInit)
-    [M2,Xconv2,CostPerIter2] = RunStateEstimation(Dat,k,Distribution,MeansInit,eps,IterMax);
+    [M2,Xconv2,CostPerIter2] = RunStateEstimation(Dat,k,Distribution,[],eps,IterMax);
     
     if CostPerIter2(end)<=CostMin
         CostMin = CostPerIter2(end);
