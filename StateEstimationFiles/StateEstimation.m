@@ -31,6 +31,9 @@ end
 CostMin = Inf; 
 
 for i = 1:Reps 
+    
+    display(strcat('Repeat no.',int2str(i))); 
+    
     [M2,Xconv2,CostPerIter2] = RunStateEstimation(Dat,k,Distribution,MeansInit,eps,IterMax); 
     
     if CostPerIter2(end)<=CostMin
