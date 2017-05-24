@@ -74,7 +74,7 @@ X - Dataset of dimension 'genes X cells'
 k - No. of cell types expected in the dataset   
 Dist - Sampling distribution of the dataset. The current options are 'Poiss' (Poisson),'NB' (Negative Binomial) and 'ZIP' (Zero Inflated Poisson) but 'ZIP' is still in beta mode. The default is 'NB'.       
 M0 - Initial guess for means (dimension 'genes X cell types'), if available. Enter [] if you don't know any.                    
-Reps - No. of multiple repeats to try. The parameters corresponding to the lowest log likelihood were selected.             
+Reps - No. of unsupervised repeats to perform. The parameters with the lowest log-likelihood value are chosen. In case of semi-supervision this can be set to 0.                  
 eps (optional) - function tolerance . default : 1e-4.       
 IterMax (optional) - Maximum iterations. default : 10. 
 
@@ -116,6 +116,7 @@ X - Dataset of dimension 'genes X cells'
 k - No. of cell types expected in the dataset   
 Dist - Sampling distribution of the dataset. The current options are 'Poiss' (Poisson),'NB' (Negative Binomial with compiled mex file), 'NB_slow' (negative binomial without mex file) and 'ZIP' (Zero Inflated Poisson). The default is 'NB_slow'.         
 M0 - Initial guess for means (dimension 'genes X cell types'), if available. Enter [] if you don't know any.        
+Reps - No. of unsupervised repeats to perform. The parameters with the lowest log-likelihood value are chosen. In case of semi-supervision this can be set to 0.                  
 IterMax (optional) - Maximum iterations. default : 5.       
 
 Outputs:
@@ -125,8 +126,10 @@ LogLike - The Log Likelihood matrix. Dimension is 'cell types X cells'
 Syntax:       
 
 ```
-[Pred,LogLike] = RunClustering(X, k, Distribution, M0 IterMax); 
+[Pred,LogLike] = UNCURL_Clustering(X, k, Distribution, M0, Reps, IterMax); 
 ```
+
+**Note:** The Negative binomial clustering will not work if the data is not in counts format. In such a case, the user should round/convert the data to counts.            
 
 **Note:** In case qualitative information is available, the output of the qualNorm function can be used as the M0 here.       
 
