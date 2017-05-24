@@ -31,7 +31,7 @@ Install_uncurl
 ```
 
 ### Getting high variance genes 
-It has been our experience that removing house keeping genes from the dataset helps improve the performance of UNCURL for various tasks. Thus we recommend the user to do so (unless using an already reduced gene list) using the function GetHighVarGenes(). The function is specified as follows:   
+It has been our experience that removing house keeping genes from the dataset helps improve the performance of UNCURL for various tasks. Thus we recommend the user to do so (unless using an already reduced gene list) using the function GetHighVarGenes(). The function divides the average expression range of the genes into several bins (the number is specified by the user) and then keeps the top x percent (also specified by the user) high variance genes from each bin. The binning is done to ensure that only the high mean genes don't get selected. The function is specified as follows:   
 
 Inputs:  
 X - Dataset of dimension 'genes X cells'   
