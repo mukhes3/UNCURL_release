@@ -31,6 +31,9 @@ end
 CostMax = -Inf; 
 %running for unsupervised case 
 for i = 1:Reps 
+
+    display(strcat('Repeat no.',int2str(i))); 
+    
     [Pred2,LogLike2] = RunClustering(Dat, k, Distribution, [], IterMax); 
     
     if sum(max(LogLike2))>CostMax
