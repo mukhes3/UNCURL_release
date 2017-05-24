@@ -73,7 +73,8 @@ Inputs:
 X - Dataset of dimension 'genes X cells'  
 k - No. of cell types expected in the dataset   
 Dist - Sampling distribution of the dataset. The current options are 'Poiss' (Poisson),'NB' (Negative Binomial) and 'ZIP' (Zero Inflated Poisson) but 'ZIP' is still in beta mode. The default is 'NB'.       
-M0 - Initial guess for means (dimension 'genes X cell types'), if available. Enter [] if you don't know any.        
+M0 - Initial guess for means (dimension 'genes X cell types'), if available. Enter [] if you don't know any.          
+Reps - No. of multiple repeats to try. The parameters corresponding to the lowest log likelihood were selected. 
 eps (optional) - function tolerance . default : 1e-4.       
 IterMax (optional) - Maximum iterations. default : 10. 
 
@@ -85,7 +86,7 @@ CostPerIter - Cost function value after each iteration (1 X no. of iterations)
 Syntax:     
 
 ```
-[M,W,CostPerIter] = RunStateEstimation(X,k,Dist,M0,eps,IterMax); 
+[M,W,CostPerIter] = StateEstimation(X,k,Dist,M0,Reps,eps,IterMax); 
 ```
 
 **Note:** In case qualitative information is available, the output of the qualNorm function can be used as the M0 here. 
