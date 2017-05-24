@@ -48,7 +48,7 @@ rhat = (xbar.*xbar) ./ (s2-xbar);
 muhat = xbar;
 [rhat,~,err,output] = ...
     fminsearch(@negloglike, rhat, options, length(x), x, sum(x), options.TolBnd);
-if (err <= 0)
+if (err < 0)
     % fminsearch may print its own output text; in any case give something
     % more statistical here, controllable via warning IDs.
 err

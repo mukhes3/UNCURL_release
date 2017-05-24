@@ -14,8 +14,8 @@ for i = 1:k
 %     In = find(Lab==i); 
     
     for j = 1:r
-%         temp = nbinfit_custom(Dat(j,Lab==i),options);
-        temp = nbinfit(Dat(j,Lab==i),[],options);
+        temp = nbinfit_custom(Dat(j,Lab==i),options);
+%         temp = nbinfit(Dat(j,Lab==i),[],options);
         R(j,i) = temp(1); 
         P(j,i) = temp(2);
     end

@@ -35,6 +35,9 @@ for i = 1:Reps
     display(strcat('Repeat no.',int2str(i))); 
     
     [Pred2,LogLike2] = RunClustering(Dat, k, Distribution, [], IterMax); 
+    max(LogLike2)
+%     LogLike2
+    display(strcat('LogLikelihood value:',num2str(sum(max(LogLike2))))); 
     
     if sum(max(LogLike2))>CostMax
         CostMax = sum(max(LogLike2)); 
@@ -48,7 +51,7 @@ end
 if ~isempty(InitMeans)
     
     [Pred2,LogLike2] = RunClustering(Dat, k, Distribution, InitMeans, IterMax); 
-    
+    display(strcat('LogLikelihood value:',num2str(sum(max(LogLike2))))); 
     if sum(max(LogLike2))>CostMax
         CostMax = sum(max(LogLike2)); 
         Pred = Pred2; 

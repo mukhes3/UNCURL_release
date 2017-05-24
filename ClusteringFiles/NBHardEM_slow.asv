@@ -9,8 +9,8 @@ coder.inline('never');
 
 [R,P] = CalcParamsNB(Init,round(Dat(NB_genes,:)),k); 
 % [R,P] = CalcParamsNB2(Init,Dat+eps,k); 
-P(P<1e-10) = 1e-10; 
-P(P>1 - 1e-10) = 1 - 1e-10; 
+
+
 
 M = CalcMeans(Init,Dat(P_genes,:)+eps,k); 
 
@@ -32,10 +32,10 @@ for j = 1:k
 
 %     LogLike(j,:) = LLfromParams(Dat,R(:,j),P(:,j));
     
-    LogLikeNB(j,:) = LLfromParams(Dat(NB_genes,:),R(:,j),P(:,j));  
+    LogLikeNB(j,:) = LLfromParams(Dat(NB_genes,:),R(:,j),P(:,j)); 
     
     if ~isempty(P_genes)
-        LogLikeP(j,:) = LLfromMeans(Dat(P_genes,:),M(:,j));
+        LogLikeP(j,:) = LLfromMeans2(Dat(P_genes,:),M(:,j));
     else
         LogLikeP(j,:) = zeros(1,c); 
     end
@@ -51,8 +51,6 @@ PredLabs = AssignLabelsFromLL(LogLikeNB + LogLikeP);
 [NB_genes, P_genes] = FindNBGenes(Dat,PredLabs,k); 
 
 [R,P] = CalcParamsNB(PredLabs,round(Dat(NB_genes,:)),k);
-P(P<1e-10) = 1e-10; 
-P(P>1 - 1e-10) = 1 - 1e-10; 
 
 % R(1:10,:)
 % P(1:10,:)
