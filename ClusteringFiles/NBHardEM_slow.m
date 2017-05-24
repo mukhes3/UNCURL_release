@@ -2,7 +2,7 @@ function [Pred,LogLike] = NBHardEM_slow(Init,Dat,IterMax,k)
 %#codegen
 coder.inline('never'); 
 
- eps = 1e-4; 
+ eps = 1e-10; 
 % Init
 [NB_genes, P_genes] = FindNBGenes(Dat,Init,k); 
 

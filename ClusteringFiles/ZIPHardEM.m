@@ -1,6 +1,7 @@
 function [Pred,LogLike] = ZIPHardEM(Init,Dat,IterMax,k)
+eps = 1e-10; 
 
-[L,M] = CalcParamsZIP(Init,Dat,k);
+[L,M] = CalcParamsZIP(Init,Dat + eps,k);
 [r,c] = size(Dat); 
 
 % L(1:10,:)
@@ -18,7 +19,7 @@ end
 
 PredLabs = AssignLabelsFromLL(LogLike); 
 
-[L,M] = CalcParamsZIP(PredLabs,Dat,k);
+[L,M] = CalcParamsZIP(PredLabs,Dat + eps,k);
 
 end
 

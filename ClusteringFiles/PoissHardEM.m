@@ -11,8 +11,10 @@ function [Pred,LogLike] = PoissHardEM(Init,Dat,IterMax,k)
 
 %#codegen
 coder.inline('never'); 
+eps = 1e-10; 
 
-MeanMat = CalcMeans(Init,Dat,k);
+
+MeanMat = CalcMeans(Init,Dat + eps,k);
 [~,c] = size(Dat); 
 
 
@@ -28,7 +30,7 @@ end
 
 PredLabs = AssignLabelsFromLL(LogLike); 
 
-MeanMat = CalcMeans(PredLabs,Dat,k);
+MeanMat = CalcMeans(PredLabs,Dat + eps,k);
 
 end
 
