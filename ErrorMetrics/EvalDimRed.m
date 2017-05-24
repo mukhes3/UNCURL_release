@@ -13,7 +13,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-function [ErrVal,s] = OneNN_err(Dmat,Lab,k)
+function [ErrVal,s] = EvalDimRed(Dmat,Lab,k)
 
 s = zeros(k,1); 
 
