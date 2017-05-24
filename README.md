@@ -73,8 +73,8 @@ Inputs:
 X - Dataset of dimension 'genes X cells'  
 k - No. of cell types expected in the dataset   
 Dist - Sampling distribution of the dataset. The current options are 'Poiss' (Poisson),'NB' (Negative Binomial) and 'ZIP' (Zero Inflated Poisson) but 'ZIP' is still in beta mode. The default is 'NB'.       
-M0 - Initial guess for means (dimension 'genes X cell types'), if available. Enter [] if you don't know any.          
-Reps - No. of multiple repeats to try. The parameters corresponding to the lowest log likelihood were selected. 
+M0 - Initial guess for means (dimension 'genes X cell types'), if available. Enter [] if you don't know any.                    
+Reps - No. of multiple repeats to try. The parameters corresponding to the lowest log likelihood were selected.             
 eps (optional) - function tolerance . default : 1e-4.       
 IterMax (optional) - Maximum iterations. default : 10. 
 
