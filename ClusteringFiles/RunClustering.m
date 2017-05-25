@@ -53,7 +53,7 @@ switch Distribution
     case 'ZIP'
         [Pred,LogLike] = ZIPHardEM(Init,Dat,IterMax,k);
     otherwise
-        [Pred,LogLike] = NBHardEM(Init,Dat,IterMax,k);
+        [Pred,LogLike] = NBHardEM_slow(Init,Dat,IterMax,k);
 end
 
 end
