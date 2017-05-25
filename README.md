@@ -21,6 +21,8 @@ S. Mukherjee, Y. Zhang, S. Kannan, G. Seelig, 'Prior knowledge and sampling mode
 ## Dependencies: 
 To the best of our knowledge, UNCURL only needs a working version of MATLAB with the optimization toolbox installed. If you discover any other dependencies, please report them to mukhes3@uw.edu or yjzhang@cs.washington.edu. 
 
+![GitHub Logo](/Misc/UNCURL_deps.jpg)       
+
 ## Quick tutorial:
 
 ### Installation
@@ -196,10 +198,10 @@ ScatterPlotGivenLabels(X_ld,Lab,k);
 ```
 **Note:-** Matlab has an in-built function 'gplotmatrix', which is more dynamic and should be used unless your version does not have that function (https://www.mathworks.com/help/stats/gplotmatrix.html). 
 
-2-dimensional representation (X_ld), cell type labels (Lab, this can be any numerical labels between 1 and k) and an Adjacency matrix (Adj). In case the true labels are not known, you can enter any type of label here. You can plot a graph with nodes colored by the labels as follows: 
+Smoothed 2-dimensional representation (LinDat), cell type labels (Lab, this can be any numerical labels between 1 and k) and an Adjacency matrix (Adj). In case the true labels are not known, you can enter any type of label here. You can plot a graph with nodes colored by the labels as follows: 
 
 ```
-PlotGraphGivenAdj(Adj,X_ld,Lab)
+PlotGraphGivenAdj(Adj,LinDat,Lab)
 ```
 
 ## Datasets 
@@ -212,7 +214,6 @@ Synthetic_Branches - Contains synthetic data from a branched trajectory (with tr
 
 **Note:-** These datasets have been pre-processed to include only the differentially expressed genes (using bulk data for differential gene expression analysis). 
 
-![GitHub Logo](/Misc/UNCURL_deps.jpg)
 
 ## Frequently Asked Questions
 FAQs for UNCURL can be found here: https://sites.google.com/uw.edu/uncurl-release/faq . 
