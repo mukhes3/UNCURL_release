@@ -5,7 +5,7 @@
 %
 % Inputs: 
 % Adj - n X n matrix 
-% Dat - n X 2 matrix 
+% Dat - 2 X n matrix 
 % Lab - n X 1 matrix  (has numbers 1 to k) 
 % k - no. of cell types in the dataset
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -23,7 +23,7 @@ El = table2array(G.Edges(:,'EndNodes'));
 h = ScatterPlotGivenLabels(Dat,Lab,k);
 
 hold on; 
-
+Dat = Dat'; 
 for i = 1:length(El(:,1))
     line([Dat(El(i,1),1),Dat(El(i,2),1)],[Dat(El(i,1),2),Dat(El(i,2),2)],'color','k'); 
 end
