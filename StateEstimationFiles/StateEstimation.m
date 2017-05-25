@@ -19,6 +19,8 @@
 
 function [M,Xconv,CostPerIter] = StateEstimation(Dat,k,Distribution,MeansInit,Reps,varargin)
 
+Dat = full(Dat); 
+
 if length(varargin) == 0 
     eps = 1e-4; 
     IterMax = 10; 

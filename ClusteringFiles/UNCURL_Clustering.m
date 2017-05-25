@@ -21,6 +21,8 @@
 
 function [Pred,LogLike] = UNCURL_Clustering(Dat, k, Distribution, InitMeans, Reps, varargin)
 
+Dat = full(Dat); 
+
 if length(varargin) > 0 
     IterMax = varargin{1}; 
 else

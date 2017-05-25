@@ -14,6 +14,7 @@
 
 function Dat_new = GetHighVarGenes(Dat, varargin)
 
+Dat = full(Dat); 
 
 %getting parameter values 
 if length(varargin) == 0 

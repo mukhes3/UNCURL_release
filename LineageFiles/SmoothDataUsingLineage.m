@@ -15,6 +15,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [Pseudotime, FitMat, ScMat] = SmoothDataUsingLineage(AdjW, StartIn, Dat)
+Dat = full(Dat); 
 
 %Get pseudotime values 
 Pseudotime = CalcPseudotime(AdjW, StartIn); 
