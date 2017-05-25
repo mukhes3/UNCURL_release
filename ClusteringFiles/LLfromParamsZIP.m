@@ -10,7 +10,7 @@ I = find(x>=1);
 temp = zeros(r,c); 
 
 temp(I) = +log(1 - M(I)) + x(I).*log(L(I)) - L(I); 
-temp(I2) = +log(M(I2) + (1-M(I2)).*exp(-L(I2))); 
+temp(I2) = +log(M(I2) + (1-M(I2)).*exp(-L(I2))) - (x(I2).*log(x(I2)) - x(I2) + .5*log(2*pi*x(I2))); 
 
 if r>1
     LogLike = sum(temp); 
