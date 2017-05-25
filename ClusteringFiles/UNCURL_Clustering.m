@@ -28,6 +28,10 @@ else
 end
 
 
+if (Reps == 0) && isempty(InitMeans)
+    error('You cant have zero reps in unsupervised case'); 
+end
+
 CostMax = -Inf; 
 %running for unsupervised case 
 for i = 1:Reps 

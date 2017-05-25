@@ -31,6 +31,10 @@ end
 
 CostMin = Inf; 
 
+if (Reps == 0) && isempty(MeansInit)
+    error('You cant have zero reps in unsupervised case'); 
+end
+
 %Running state estimation for unsupervised case
 for i = 1:Reps 
     
