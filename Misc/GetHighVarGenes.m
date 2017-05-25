@@ -8,9 +8,11 @@
 % X - number between 0 and 1. What fraction of high variance genes to
 % consider from each bin (default .1).
 %
+% Output: 
+% Dat_new - New data matrix with just high variance genes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function In = GetHighVarGenes(Dat, varargin)
+function Dat_new = GetHighVarGenes(Dat, varargin)
 
 
 %getting parameter values 
@@ -45,6 +47,7 @@ end
 
 % In = unique(In); 
 
+Dat_new = Dat(In,:); 
 
 end    
     
