@@ -2,10 +2,21 @@ function [OutMat,OutMatSorted, I] = CollapseCluster2Curve(Dat)
 
 [r,c] = size(Dat); 
 
-%get robust fit parameters
-[param1,gof1,~] = fit(Dat(1,:)',Dat(2,:)','fourier3'); %'fourier5'
-[param2,gof2,~] = fit(Dat(2,:)',Dat(1,:)','fourier3'); %'fourier5'
 
+
+%get robust fit parameters
+if length(Dat(1,:))>7
+    [param1,gof1,~] = fit(Dat(1,:)',Dat(2,:)','fourier3'); %'fourier5'
+    [param2,gof2,~] = fit(Dat(2,:)',Dat(1,:)','fourier3'); %'fourier5'
+elseif length(Dat(1,:))>5
+    [param1,gof1,~] = fit(Dat(1,:)',Dat(2,:)','fourier2'); %'fourier5'
+    [param2,gof2,~] = fit(Dat(2,:)',Dat(1,:)','fourier2'); %'fourier5'
+elseif length(Dat(1,:))>1 
+    [param1,gof1,~] = fit(Dat(1,:)',Dat(2,:)','linear'); %'fourier5'
+    [param2,gof2,~] = fit(Dat(2,:)',Dat(1,:)','linear'); %'fourier5'
+elseif length(Dat(1,:))<=1
+    error('There has to be at least two cells for each cell type'); 
+end
 
 % figure()
 % plot(param1); 
