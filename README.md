@@ -91,6 +91,14 @@ Syntax:
 
 **Note:** In case qualitative information is available, the output of the qualNorm function can be used as the M0 here. 
 
+**Note:** If you are using the means estimated during the state estimation step as your initial guess for clustering, we **strongly recommend** doing the following before providing the means:            
+
+```
+[M0] = KmeansPP(M0,X,k);
+```
+This step will simply replace the estimated means with the closest points in the dataset. We have seen that this significantly improves the clustering accuracy. If you want to run the clustering quickly, you can simply do it without providing any initial means. In such a case, UNCURL will use Kmeans++ to general starting points for the clustering algorithm.         
+
+
 ### Dimensionality reduction
 Suppose you now have the M and the W matrices from the state estimation step. You can convert the data to l dimensions using UNCURL. The function to do so is specified as follows:     
 
@@ -133,12 +141,6 @@ Syntax:
 
 **Note:** In case qualitative information is available, the output of the qualNorm function can be used as the M0 here.       
 
-**Note:** If you are using the means estimated during the state estimation step as your initial guess for means, we **strongly recommend** doing the following before providing the means:            
-
-```
-[M0] = KmeansPP(M0,X,k);
-```
-This step will simply replace the estimated means with the closest points in the dataset. We have seen that this significantly improves the clustering accuracy. If you want to run the clustering quickly, you can simply do it without providing any initial means. In such a case, UNCURL will use Kmeans++ to general starting points for the clustering algorithm.         
 
 ### Lineage estimation 
 Suppose you now have the M and the W matrices from the state estimation step, UNCURL can be used to infer a smooth lineage for your data. The function to do so is specified as follows:        
@@ -194,10 +196,10 @@ ScatterPlotGivenLabels(X_ld,Lab,k);
 ```
 **Note:-** Matlab has an in-built function 'gplotmatrix', which is more dynamic and should be used unless your version does not have that function (https://www.mathworks.com/help/stats/gplotmatrix.html). 
 
-2-dimensional representation (X_ld), cell type labels (Lab, this can be any numerical labels between 1 and k), k (no. of unique labels) and an Adjacency matrix (Adj). You can plot a graph with nodes colored by the labels as follows: 
+2-dimensional representation (X_ld), cell type labels (Lab, this can be any numerical labels between 1 and k) and an Adjacency matrix (Adj). In case the true labels are not known, you can enter any type of label here. You can plot a graph with nodes colored by the labels as follows: 
 
 ```
-PlotGraphGivenAdj(Adj,X,Lab,k)
+PlotGraphGivenAdj(Adj,X_ld,Lab)
 ```
 
 ## Datasets 
