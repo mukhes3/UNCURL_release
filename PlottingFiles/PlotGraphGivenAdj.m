@@ -7,15 +7,16 @@
 % Adj - n X n matrix 
 % Dat - 2 X n matrix 
 % Lab - n X 1 matrix  (has numbers 1 to k) 
-% k - no. of cell types in the dataset
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function h = PlotGraphGivenAdj(Adj,Dat,Lab,k)
+function h = PlotGraphGivenAdj(Adj,Dat,Lab)
 
 if isempty(Lab)
     Lab = ones(length(Adj),1); 
-    k = 1; 
+     
 end
+
+k = length(unique(Lab));
 
 G = graph(Adj); 
 El = table2array(G.Edges(:,'EndNodes'));
