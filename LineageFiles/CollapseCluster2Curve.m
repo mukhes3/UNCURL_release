@@ -8,10 +8,10 @@ function [OutMat,OutMatSorted, I] = CollapseCluster2Curve(Dat)
 if length(Dat(1,:))>7
     [param1,gof1,~] = fit(Dat(1,:)',Dat(2,:)','fourier3'); %'fourier5'
     [param2,gof2,~] = fit(Dat(2,:)',Dat(1,:)','fourier3'); %'fourier5'
-elseif length(Dat(1,:))>5
+elseif (length(Dat(1,:))>5 && length(Dat(1,:))<=7)
     [param1,gof1,~] = fit(Dat(1,:)',Dat(2,:)','fourier2'); %'fourier5'
     [param2,gof2,~] = fit(Dat(2,:)',Dat(1,:)','fourier2'); %'fourier5'
-elseif length(Dat(1,:))>1 
+elseif (length(Dat(1,:))>1 && length(Dat(1,:))<=5) 
     [param1,gof1,~] = fit(Dat(1,:)',Dat(2,:)','linear'); %'fourier5'
     [param2,gof2,~] = fit(Dat(2,:)',Dat(1,:)','linear'); %'fourier5'
 elseif length(Dat(1,:))<=1
