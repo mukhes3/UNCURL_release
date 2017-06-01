@@ -16,7 +16,7 @@ Georg Seelig (Associate Professor, UW Electrical Engineering / UW Computer Scien
 
 ## References: 
 Please cite the following paper in case you use UNCURL for your work:  
-S. Mukherjee, Y. Zhang, S. Kannan, G. Seelig, 'Prior knowledge and sampling model informed learning with single cell RNA-Seq data' (http://biorxiv.org/content/early/2017/05/25/142398).
+S. Mukherjee, Y. Zhang, S. Kannan, G. Seelig, 'Prior knowledge and sampling model informed learning with single cell RNA-Seq data' (http://biorxiv.org/content/early/2017/05/31/142398).
 
 ## Dependencies: 
 To the best of our knowledge, UNCURL only needs a working version of MATLAB with the optimization toolbox installed. If you discover any other dependencies, please report them to mukhes3@uw.edu or yjzhang@cs.washington.edu. 
