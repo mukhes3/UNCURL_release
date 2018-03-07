@@ -1,7 +1,7 @@
 # UNCURL_release
 UNCURL is an unified framework for unsupervised / semi-supervised learning using Single Cell RNA-Seq data. This is the **Matlab** release  (for the Python release visit https://github.com/yjzhang/uncurl_python. The python repository is the more current repository with ability to scale to really large datasets.). More details about UNCURL can be found in the cited paper. 
 
-**Note: This repository is no longer maintained. The Python repository (https://github.com/yjzhang/uncurl_python) is much more current and the recommended repository as of 03/07/2018. ** 
+**Note: This repository is no longer maintained. The Python repository (https://github.com/yjzhang/uncurl_python) is much more current and the recommended repository as of 03/07/2018.** 
 
 ## Contributors: 
 Sumit Mukherjee (PhD Candidate, UW Electrical Engineering),  
